@@ -25,7 +25,7 @@ export function Footer() {
                     <div className="md:col-span-2 md:col-start-7">
                         <h4 className="text-sm font-medium uppercase tracking-widest text-white/40 mb-8">Programs</h4>
                         <ul className="space-y-4 text-sm text-white/70">
-                            {["ELV8S Core", "ELV8S AI", "ELV8S Finance", "Corporate Training"].map((item) => (
+                            {["The Corporate Launchpad", "ELV8S AI", "ELV8S Finance", "Corporate Training"].map((item) => (
                                 <li key={item}>
                                     <Link href="/programs" className="hover:text-white transition-colors flex items-center group">
                                         {item}
@@ -52,8 +52,17 @@ export function Footer() {
                     <div className="md:col-span-2">
                         <h4 className="text-sm font-medium uppercase tracking-widest text-white/40 mb-8">Contact</h4>
                         <ul className="space-y-4 text-sm text-white/70 font-light">
-                            <li>hello@elv8s.com</li>
-                            <li>Vancouver, BC</li>
+                            <li>info@elv8s.com</li>
+                            <li className="space-y-4">
+                                <div>
+                                    <p className="text-xs text-white/40 uppercase tracking-wider mb-1">Canada</p>
+                                    <p className="text-white font-medium">Toronto, Vancouver</p>
+                                </div>
+                                <div>
+                                    <p className="text-xs text-white/40 uppercase tracking-wider mb-1">USA</p>
+                                    <p className="text-white font-medium">New Jersey</p>
+                                </div>
+                            </li>
                             <li>+1 (555) 123-4567</li>
                         </ul>
                     </div>
@@ -67,3 +76,4 @@ export function Footer() {
         </footer>
     );
 }
+//  info@elv8s.com

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Chatbot } from "@/components/features/Chatbot";
@@ -11,24 +12,25 @@ export default function Programs() {
     const programs = [
         {
             id: "core",
-            title: "ELV8S Core",
+            title: "The Corporate Launchpad",
             subtitle: "Workplace Readiness Intensive (2–3 Days)",
             description: "The definitive guide to corporate navigation. Bridge the gap between academic theory and the unwritten rules of the boardroom.",
             whoFor: "Students, new hires, career switchers, and professionals who want a solid foundation in how modern workplaces operate.",
             features: [
-                "Understanding workplace culture and expectations",
-                "How to communicate clearly: emails, meetings, updates",
-                "Managing time, priorities, and multiple stakeholders",
-                "Navigating feedback, conflict, and difficult conversations",
-                "Owning your first 90 days in any role"
+                "Workplace Culture & Unwritten Rules",
+                "Professional Communication",
+                "Strategic Time & Stakeholder Management",
+                "The AI-Powered Workflow",
+                "Navigating Conflict & Feedback",
+                "A 30-60-90 Days Plan to ensure success "
             ],
             outcomes: [
-                "Know how to show up on Day 1 with clarity and confidence",
-                "Understand how their role contributes to business outcomes",
-                "Communicate more professionally and persuasively",
-                "Build stronger working relationships from the start"
+                "Day One Readiness: You will walk into your first day with the clarity and confidence to navigate any corporate environment.",
+                "Business Impact Awareness: You will gain a deep understanding of how your individual role contributes to the company’s bottom line and larger goals.",
+                "Enhanced Influence: You will communicate with a level of professionalism and persuasion that earns the respect of senior colleagues.",
+                "Relationship Excellence: You will possess the tools to build strong, collaborative working relationships and professional networks from the start."
             ],
-            cta: "Enquire About ELV8S Core",
+            cta: "Enquire About The Corporate Launchpad",
             icon: BookOpen,
             theme: "from-blue-500/20 to-blue-900/5"
         },
@@ -144,9 +146,9 @@ export default function Programs() {
                                             <h3 className="text-sm font-bold text-primary-900 uppercase tracking-wider mb-4 font-heading">Outcomes</h3>
                                             <ul className="space-y-2">
                                                 {program.outcomes.map((outcome, i) => (
-                                                    <li key={i} className="text-neutral-600 text-sm flex items-center gap-2 font-sans">
-                                                        <span className="w-1.5 h-1.5 rounded-full bg-secondary-start" />
-                                                        {outcome}
+                                                    <li key={i} className="text-neutral-600 text-sm flex items-start gap-3 font-sans">
+                                                        <span className="w-1.5 h-1.5 rounded-full bg-secondary-start mt-2 flex-shrink-0" />
+                                                        <span className="leading-relaxed">{outcome}</span>
                                                     </li>
                                                 ))}
                                             </ul>
@@ -194,8 +196,10 @@ export default function Programs() {
                                     </ul>
                                 </div>
                             </div>
-                            <Button variant="white" size="lg">
-                                Contact Us for Custom Training
+                            <Button variant="white" size="lg" asChild>
+                                <Link href="/contact">
+                                    Contact Us for Custom Training
+                                </Link>
                             </Button>
                         </SlideUp>
 

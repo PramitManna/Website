@@ -8,7 +8,43 @@ import { Input, Select, Checkbox } from "@/components/ui/Input";
 import { Mail, MapPin, MessageSquare, ArrowRight } from "lucide-react";
 import { FadeIn, SlideUp } from "@/components/ui/Motion";
 
+import { useState } from "react";
+
 export default function Contact() {
+    const [status, setStatus] = useState({ loading: false, success: false, error: null });
+
+    async function handleSubmit(e) {
+        e.preventDefault();
+        setStatus({ loading: true, success: false, error: null });
+
+        const formData = new FormData(e.target);
+        const data = {
+            name: formData.get("name"),
+            email: formData.get("email"),
+            phone: formData.get("phone"),
+            role: formData.get("role"),
+            interests: formData.getAll("interests"), // Checkbox handling might need adjustment depending on component
+            message: formData.get("message"),
+            contactTime: formData.get("contactTime")
+        };
+
+        try {
+            const res = await fetch("/api/contact", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data),
+            });
+
+            const result = await res.json();
+
+            if (!res.ok) throw new Error(result.error || "Something went wrong");
+
+            setStatus({ loading: false, success: true, error: null });
+            e.target.reset();
+        } catch (error) {
+            setStatus({ loading: false, success: false, error: error.message });
+        }
+    }
     return (
         <main className="min-h-screen flex flex-col bg-neutral-50 overflow-x-hidden">
             <Navbar />
@@ -26,26 +62,26 @@ export default function Contact() {
                                 </p>
                             </SlideUp>
 
-                            <form className="space-y-8">
+                            <form className="space-y-8" onSubmit={handleSubmit}>
                                 <div className="grid md:grid-cols-2 gap-8">
                                     <div className="space-y-2">
                                         <label className="text-xs font-bold text-primary-900 uppercase tracking-wider ml-1">Full Name</label>
-                                        <Input placeholder="e.g. Jane Cooper" />
+                                        <Input name="name" placeholder="e.g. Jane Cooper" required />
                                     </div>
                                     <div className="space-y-2">
                                         <label className="text-xs font-bold text-primary-900 uppercase tracking-wider ml-1">Email Address</label>
-                                        <Input type="email" placeholder="jane@company.com" />
+                                        <Input name="email" type="email" placeholder="jane@company.com" required />
                                     </div>
                                 </div>
 
                                 <div className="space-y-2">
                                     <label className="text-xs font-bold text-primary-900 uppercase tracking-wider ml-1">Phone (Optional)</label>
-                                    <Input type="tel" placeholder="+1 (555) 000-0000" />
+                                    <Input name="phone" type="tel" placeholder="+1 (555) 000-0000" />
                                 </div>
 
                                 <div className="space-y-2">
                                     <label className="text-xs font-bold text-primary-900 uppercase tracking-wider ml-1">I am a...</label>
-                                    <Select>
+                                    <Select name="role">
                                         <option>Student / Recent Graduate</option>
                                         <option>Professional / Manager</option>
                                         <option>HR / L&D / Leadership</option>
@@ -63,7 +99,7 @@ export default function Contact() {
                                             "Custom / Corporate Program"
                                         ].map((item) => (
                                             <label key={item} className="flex items-center space-x-3 cursor-pointer group p-3 rounded-xl hover:bg-neutral-50 transition-colors border border-transparent hover:border-neutral-100">
-                                                <Checkbox />
+                                                <Checkbox name="interests" value={item} />
                                                 <span className="text-sm text-neutral-700 font-medium group-hover:text-primary-900 transition-colors">{item}</span>
                                             </label>
                                         ))}
@@ -73,18 +109,32 @@ export default function Contact() {
                                 <div className="space-y-2">
                                     <label className="text-xs font-bold text-primary-900 uppercase tracking-wider ml-1">Message</label>
                                     <textarea
+                                        name="message"
                                         className="flex min-h-[120px] w-full rounded-xl border border-neutral-200 bg-neutral-50/50 px-5 py-4 text-base ring-offset-white placeholder:text-neutral-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-900/10 focus-visible:border-primary-900 disabled:cursor-not-allowed disabled:opacity-50 transition-all duration-300 resize-none"
                                         placeholder="Brief description of your goals..."
+                                        required
                                     />
                                 </div>
 
                                 <div className="space-y-2">
                                     <label className="text-xs font-bold text-primary-900 uppercase tracking-wider ml-1">Preferred Contact Time (Optional)</label>
-                                    <Input placeholder="e.g. Weekday mornings" />
+                                    <Input name="contactTime" placeholder="e.g. Weekday mornings" />
                                 </div>
 
-                                <Button type="submit" size="lg" className="w-full shadow-xl shadow-primary-900/10 hover:scale-[1.02] transition-transform">
-                                    Submit <ArrowRight size={18} className="ml-2" />
+                                {status.error && (
+                                    <div className="p-4 rounded-xl bg-red-50 text-red-600 text-sm">
+                                        {status.error}
+                                    </div>
+                                )}
+
+                                {status.success && (
+                                    <div className="p-4 rounded-xl bg-green-50 text-green-600 text-sm">
+                                        Message sent successfully! We'll be in touch soon.
+                                    </div>
+                                )}
+
+                                <Button type="submit" size="lg" className="w-full shadow-xl shadow-primary-900/10 hover:scale-[1.02] transition-transform" disabled={status.loading}>
+                                    {status.loading ? 'Sending...' : 'Submit'} <ArrowRight size={18} className="ml-2" />
                                 </Button>
                             </form>
                         </div>
@@ -105,7 +155,7 @@ export default function Contact() {
                                             </div>
                                             <div>
                                                 <p className="text-xs text-white/40 uppercase tracking-widest mb-1">Email</p>
-                                                <p className="font-medium text-lg text-white">hello@elv8s.com</p>
+                                                <p className="font-medium text-lg text-white">info@elv8s.com</p>
                                             </div>
                                         </li>
                                         <li className="flex items-start space-x-6 group">
@@ -113,9 +163,18 @@ export default function Contact() {
                                                 <MapPin className="w-5 h-5 text-white" />
                                             </div>
                                             <div>
-                                                <p className="text-xs text-white/40 uppercase tracking-widest mb-1">Location</p>
-                                                <p className="font-medium text-lg text-white">Vancouver, BC</p>
-                                                <p className="text-sm text-white/60">(Serving clients virtually worldwide)</p>
+                                                <p className="text-xs text-white/40 uppercase tracking-widest mb-4">Locations</p>
+                                                <div className="space-y-4">
+                                                    <div>
+                                                        <p className="text-xs text-white/60 uppercase tracking-wider mb-1">Canada</p>
+                                                        <p className="font-medium text-lg text-white">Toronto, Vancouver</p>
+                                                    </div>
+                                                    <div>
+                                                        <p className="text-xs text-white/60 uppercase tracking-wider mb-1">USA</p>
+                                                        <p className="font-medium text-lg text-white">New Jersey</p>
+                                                    </div>
+                                                </div>
+                                                <p className="text-sm text-white/60 mt-4">(Serving clients virtually worldwide)</p>
                                             </div>
                                         </li>
                                     </ul>

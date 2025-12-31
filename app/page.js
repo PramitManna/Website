@@ -25,24 +25,26 @@ export default function Home() {
                         <div className="space-y-6">
                             <SlideUp delay={0.1}>
                                 <h1 className="text-primary-900 font-heading text-balance">
-                                    Elevate How You Work. <br />
+                                    Elevate Your Career. <br />
                                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-900 via-primary-800 to-secondary-start">
-                                        Accelerate Where You’re Going.
+                                        Master the Corporate Landscape.
                                     </span>
                                 </h1>
                             </SlideUp>
 
                             <SlideUp delay={0.2}>
                                 <p className="text-lg md:text-xl text-neutral-600 max-w-lg leading-relaxed font-light font-sans">
-                                    ELV8S (E-L-V-8-S) is a training and coaching partner that helps students, professionals, and teams navigate the modern workplace with clarity, confidence, and the smart use of AI.
+                                    ELV8S is your partner in navigating the transition from classroom to boardroom. We empower new joiners to master corporate culture with clarity and confidence. By blending essential professional soft skills with the smart use of AI, we ensure you don’t just start your journey—you accelerate your path to success.
                                 </p>
                             </SlideUp>
 
                             <SlideUp delay={0.3}>
                                 <div className="flex flex-col sm:flex-row gap-5">
                                     <motion.div whileTap={{ scale: 0.95 }}>
-                                        <Button size="lg" className="shadow-xl shadow-primary-900/10 font-heading tracking-tight flex items-center">
-                                            Book a Free 20-Minute Consultation
+                                        <Button size="lg" className="shadow-xl shadow-primary-900/10 font-heading tracking-tight flex items-center" asChild>
+                                            <Link href="/contact">
+                                                Book a Free 20-Minute Consultation
+                                            </Link>
                                         </Button>
                                     </motion.div>
                                     <motion.div whileTap={{ scale: 0.95 }}>
@@ -315,9 +317,9 @@ export default function Home() {
                     <StaggerContainer className="grid lg:grid-cols-3 gap-8">
                         {[
                             {
-                                title: "ELV8S Core",
+                                title: "The Corporate Launchpad",
                                 subtitle: "Workplace Readiness Intensive",
-                                desc: "A 2–3 day program covering culture, communication, expectations, and performance in modern workplaces.",
+                                desc: "Master the transition from campus to career with our intensive 16 hours program split over comfortable duration. We partner with you to navigate corporate culture, ways of working, do’s and don’ts and performance expectations —giving you the clarity and confidence to perform from day one.",
                                 image: "/images/core_visual.png"
                             },
                             {
@@ -370,8 +372,10 @@ export default function Home() {
                         <p className="text-white/80 text-xl max-w-2xl mx-auto mb-10 font-light">
                             Whether you’re preparing for your first role, aiming for promotion, or re-designing how your team works, ELV8S can help you move with more confidence and clarity.
                         </p>
-                        <Button variant="white" size="lg" className="h-16 px-12 text-lg shadow-2xl hover:scale-105 transition-transform duration-300">
-                            Book a Free Consultation
+                        <Button variant="white" size="lg" className="h-16 px-12 text-lg shadow-2xl hover:scale-105 transition-transform duration-300" asChild>
+                            <Link href="/contact">
+                                Book a Free Consultation
+                            </Link>
                         </Button>
                     </SlideUp>
                 </div>
